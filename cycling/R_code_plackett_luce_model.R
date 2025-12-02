@@ -145,3 +145,83 @@ tibble(riders) |>
   ) |> 
   arrange(mean) |> 
   gt_preview(top_n=100,bottom_n=5)
+
+
+#######Step 6 - Create pretty table for Linkedin post
+################################################################################
+
+#Create a table with rider stats
+rider_stats <- data |> 
+  group_by(Name) |> 
+  summarise(
+    n_itts = n_distinct(stage_id),
+    n_victories = sum(Rank == 1),
+    avg_pos = mean(Rank)
+  )
+
+#Merge rider stats with model estimates and start making the table
+tibble(Name = riders) |> 
+  bind_cols(
+    f$summary(
+      variables = "theta",
+      mean,
+      ~quantile(.x, probs = c(0.025, 0.975))
+    )
+  ) |> 
+  left_join(rider_stats, by = "Name") |> 
+  select(-variable) |> 
+  arrange(mean) |> 
+  slice_head(n = 10) |>   
+  gt() |> 
+  
+#Headers 
+tab_header(
+  title = md("**Latent individual time trial abilities for UCI World Tour Riders (2017-2023)**"),
+  subtitle = "Top 10 posterior ability estimates from a Plackett–Luce ranking model"
+)|> 
+#Labels  
+  cols_label(
+    Name = "Rider",
+    mean="Posterior Mean Ability",
+    '2.5%' = "Lower 95% CI",
+    '97.5%' = "Upper 95% CI",
+    n_itts='ITTs',
+    n_victories='Wins',
+    avg_pos='Avg. Finish Pos.'
+  ) |> 
+fmt_number(
+  columns = c(mean, `2.5%`, `97.5%`),
+  decimals = 6
+) |> 
+  fmt_number(
+  columns = avg_pos,
+  decimals = 1
+)|> 
+    # Styling
+  tab_style(
+    style = list(
+      cell_fill(color = "#f0f0f0"),
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels()
+  ) |> 
+  
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = c(avg_pos, Name))
+  ) |> 
+  
+  # Footnote
+  tab_source_note(
+    source_note = md("*Data from UCI World Tour individual time-trial stages (2017–2023).<br>
+                     Lower values indicate stronger underlying performance.<br>
+                     Source: https://figshare.com/articles/dataset/Cycling_Analytics_Data_Sets/24566542*")
+  ) |> 
+  
+  # Options
+  tab_options(
+    table.font.size = px(12),
+    heading.title.font.size = px(18),
+    heading.subtitle.font.size = px(14)
+  )
+
