@@ -95,7 +95,7 @@ data |>
   gt_preview(top_n=25,bottom_n=5)
 
 
-#######Step 3 - Prepare the data for Stan
+#######Step 4 - Prepare the data for Stan
 ################################################################################
 riders<-factor(sort(unique(as.character(data$Name))))
 
@@ -118,7 +118,7 @@ dat<-list(
   s=c(stages$s,length(data$rider_idx)) #start indexes for each new stage
 )
 
-#######Step 4 - Fit the model and validate it
+#######Step 5 - Fit the model and validate it
 ################################################################################
 m<-cmdstan_model('plackett_luce_cycling.stan')
 f<-m$sample(data=dat,parallel_chains = 4)
@@ -126,7 +126,7 @@ f$cmdstan_diagnose()
 
 
 
-#######Step 5 - Inspect the results
+#######Step 6 - Inspect the results
 ###############################################################################
 
 #Estimated latent ability parameter for each rider (underlying ITT performance level)
@@ -147,7 +147,7 @@ tibble(riders) |>
   gt_preview(top_n=100,bottom_n=5)
 
 
-#######Step 6 - Create pretty table for Linkedin post
+#######Step 7 - Create pretty table for Linkedin post
 ################################################################################
 
 #Create a table with rider stats
