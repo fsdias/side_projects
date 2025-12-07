@@ -147,7 +147,7 @@ tibble(riders) |>
   gt_preview(top_n=100,bottom_n=5)
 
 
-#######Step 7 - Create pretty table for Linkedin post
+#######Step 7 - Create a pretty table 
 ################################################################################
 
 #Create a table with rider stats
