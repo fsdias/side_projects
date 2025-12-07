@@ -1,6 +1,6 @@
 # Testing the Plackett–Luce Model in Stan Using UCI World Tour Cycling Data (2017–2023)
 
-This repository contains R code and a Stan model used to explore and test the **Plackett–Luce ranking model** using **professional cycling data**, specifically **Individual Time Trial (ITT)** stages from the **UCI World Tour (2017–2023)**.
+This repository contains R code and a Stan model used to explore and test the **Plackett–Luce ranking model** using **professional cycling data**, specifically **Individual Time Trial (ITT)** stages from the **UCI World Tour (2017–2023)** (https://figshare.com/articles/dataset/Cycling_Analytics_Data_Sets/24566542).
 
 ---
 
