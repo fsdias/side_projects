@@ -35,6 +35,7 @@ $$
 $$
 
 **Priors:**
+
 $$
 \begin{align}
 \mu_{\text{ha}} &\sim \mathcal{N}(0.2, 0.01^2) \\
@@ -65,6 +66,7 @@ $$
 where $z_{t,j} \sim \mathcal{N}(0,1)$ and $\mathbf{L}_R$ is the Cholesky factor of the correlation matrix.
 
 **Priors:**
+
 $$
 \begin{align}
 \bar{a}_1 &\sim \mathcal{N}(3.3, 0.2^2) \quad \text{(baseline attack)} \\
