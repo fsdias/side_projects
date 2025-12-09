@@ -1,4 +1,4 @@
-## 📋 **Bayesian hierarchical model for predicting handball results **
+## 📋 Bayesian hierarchical model for predicting handball results
 
 A Bayesian hierarchical model for predicting handball game scores using Stan. This model accounts for team-specific attacking and defensive strengths, home advantage, and correlations between team abilities.
 
@@ -22,8 +22,8 @@ away_score ~ Poisson(exp(att_away - def_home))
 Where:
 
 ``
-att_t = attacking strength of team t
-def_t = defensive strength of team t
+att_t = attacking strength of team t  
+def_t = defensive strength of team t  
 home_adv = home advantage (varies by team)
 ``
 
