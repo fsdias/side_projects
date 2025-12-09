@@ -72,6 +72,7 @@ The scoring intensities are:
 Scores follow:
 
   yH_i ~ Poisson(exp(log_lambda_home_i))
+  
   yA_i ~ Poisson(exp(log_lambda_away_i))
 
 ---
