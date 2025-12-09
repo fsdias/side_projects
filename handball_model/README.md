@@ -78,4 +78,7 @@ and scores follow:
 
 ## 3. Repository contents
 
-simulate_handball_data_check_model.R - 
+1. simulate_handball_data_check_model.R - This code generates synthetic handball data and checks whether the model can recover the parameters used to create it
+2. handball_model_poisson1.stan - The Stan
+3. ecl_analysis - Code to test the model using EHF Champions League 25/26 Group A results before the winter break.
+
