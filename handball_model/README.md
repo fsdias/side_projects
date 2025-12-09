@@ -1,9 +1,9 @@
-## 📋 **Model Overview**
+## 📋 **Bayesian hierarchical model for predicting handball results **
 
 ### **Core Structure**
 The model predicts match scores using:
-- **Team abilities**: Attack (`att`) and defense (`def`) strengths for each team.
-- **Home advantage**: A team-specific boost for home matches.
+- **Team abilities**: Attacking ability (`att`) and defense ability (`def`) for each team.
+- **Home advantage**: A team-specific boost for the home team.
 - **Poisson-distributed goals**: Scores are generated from Poisson distributions with team-dependent rates.
 
 ### **Key Equations**
