@@ -2,6 +2,7 @@
 
 A Bayesian hierarchical model for predicting handball game scores using Stan. This model accounts for team-specific attacking and defensive strengths, home advantage, and correlations between team abilities.
 
+---
 
 ## Model Overview
 
@@ -11,35 +12,43 @@ Handball scoring can be modeled using Poisson likelihoods with log‑intensities
 - Team‑specific defense ability
 - Team‑specific home‑advantage effect
 
-  
+All team abilities are given hierarchical priors so that information is shared across teams.
+
+--- 
+
 ## Conceptual Explanation
 
-Below is the centered version of the model used for description only. The Stan implementation in this repository uses the non‑centered version for sampling performance.
-
+This section describes a centered version of the model for readability. The actual Stan file uses a non‑centered parameterization.
 ### Team Attack and Defense
 
-Each team t has attack and defense abilities:
+Each team t has two abilities:
 
-\[ 
-\begin{pmatrix}
-\text{att}_t \\
-\text{def}_t
-\end{pmatrix}
-\sim 
-\mathcal{N} \left(
-\begin{pmatrix}
-\bar{a}_1 \\
-\bar{a}_2
-\end{pmatrix},
-\; \Sigma
-\right)
-\]
+- att_t : attack strength
+- def_t : defense strength
 
-where:
+- We assume:
 
-- \( \bar{a}_1 \) = global average attack  
-- \( \bar{a}_2 \) = global average defense  
-- \( \Sigma = \mathrm{diag}(\sigma_{\text{teams}})\, R \, \mathrm{diag}(\sigma_{\text{teams}}) \)  
-- \( R \) = 2×2 correlation matrix with LKJ prior  
+  (att_t, def_t) ~ Multivariate Normal(mean = (abar_1, abar_2), covariance = Sigma)
 
-This allows correlated attack/defense abilities and enforces reasonable shrinkage.
+  where:
+
+- abar_1 = global average attack
+- abar_2 = global average defense
+- Sigma = covariance matrix constructed from:
+    - sigma_teams (standard deviations for attack and defense)
+    - R (2x2 correlation matrix with LKJ prior)
+      
+ This structure allows attack and defense to be correlated.
+
+---
+
+### Home Advantage
+
+Each team t has a home‑advantage effect:
+
+  ha_t ~ Normal(mu_ha, sigma_ha)
+
+with hyperpriors:
+
+  mu_ha    ~ Normal(0.2, 0.01)
+  sigma_ha ~ Exponential(10)
