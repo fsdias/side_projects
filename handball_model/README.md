@@ -19,6 +19,7 @@ All team abilities are given hierarchical priors so that information is shared a
 ## 2. Conceptual Explanation
 
 This section describes a centered version of the model for readability. The actual Stan file uses a non‑centered parameterization.
+
 ### Team Attack and Defense
 
 Each team t has two abilities:
@@ -40,7 +41,9 @@ We assume:
       
  This structure allows attack and defense to be correlated.
 
-Concerning the home advantage, we assume each team t has a home‑advantage effect:
+### Home advantage
+
+We assume each team t has a home‑advantage effect:
 
 ha_t ~ Normal(mu_ha, sigma_ha)
 
@@ -49,6 +52,9 @@ with hyperpriors:
   mu_ha    ~ Normal(0.2, 0.01)
   sigma_ha ~ Exponential(10)
 
+
+
+### Likelihood
 
 The likelihood for each match i is as follows:
 
