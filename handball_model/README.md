@@ -52,3 +52,26 @@ with hyperpriors:
 
   mu_ha    ~ Normal(0.2, 0.01)
   sigma_ha ~ Exponential(10)
+
+---
+
+## Match Likelihood
+
+For each match i:
+
+- h_i = home team
+- a_i = away team
+- yH_i = observed home score
+- yA_i = observed away score
+
+The scoring intensities are:
+
+  log_lambda_home_i = ha_(h_i) + att_(h_i) - def_(a_i)
+  log_lambda_away_i = att_(a_i) - def_(h_i)
+
+Scores follow:
+
+  yH_i ~ Poisson(exp(log_lambda_home_i))
+  yA_i ~ Poisson(exp(log_lambda_away_i))
+
+---
