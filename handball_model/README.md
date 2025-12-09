@@ -23,7 +23,9 @@ Where:
 
 ``
 att_t = attacking strength of team t  
+
 def_t = defensive strength of team t  
+
 home_adv = home advantage (varies by team)
 ``
 
