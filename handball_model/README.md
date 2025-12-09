@@ -1,28 +1,38 @@
 ## 📋 **Bayesian hierarchical model for predicting handball results **
 
-### **Core Structure**
-The model predicts match scores using:
-- **Team abilities**: Attacking ability (`att`) and defense ability (`def`) for each team.
-- **Home advantage**: A team-specific boost for the home team.
-- **Poisson-distributed goals**: Scores are generated from Poisson distributions with team-dependent rates.
+A Bayesian hierarchical model for predicting handball game scores using Stan. This model accounts for team-specific attacking and defensive strengths, home advantage, and correlations between team abilities.
 
-### **Key Equations**
-For a match between **home team *h*** and **away team *a***:
+**Model Overview**
 
-1. **Home team's expected goals**:
-   \[
-   \log(\lambda_h) = \text{home\_adv}_h + \text{att}_h - \text{def}_a
-   \]
-   \[
-   \text{Home Score} \sim \text{Poisson}(\lambda_h)
-   \]
+This model predicts game scores using a Poisson distribution where the log-rate depends on:
 
-2. **Away team's expected goals**:
-   \[
-   \log(\lambda_a) = \text{att}_a - \text{def}_h
-   \]
-   \[
-   \text{Away Score} \sim \text{Poisson}(\lambda_a)
-   \]
+- Team attacking strength
+- Opponent defensive strength  
+- Home field advantage
 
----
+  
+**Score Model**
+
+For each game, scores are modeled as:
+
+home_score ~ Poisson(exp(home_adv + att_home - def_away))
+away_score ~ Poisson(exp(att_away - def_home))
+
+
+Where:
+
+att_t = attacking strength of team t
+def_t = defensive strength of team t
+home_adv = home advantage (varies by team)
+
+Attack and defense parameters are drawn from a bivariate normal distribution, allowing the model to learn correlations between offensive and defensive strength:
+
+[att_t,def_t]~Normal([mu_att, mu_def], Sigma)
+
+The covariance matrix "Sigma" captures whether teams that are strong offensively tend to also be strong (or weak) defensively.
+
+Home Advantage: Each team has its own home advantage parameter drawn from a common distribution:
+
+home_adv_t ~ Normal(mu_ha, sigma_ha)
+
+        
