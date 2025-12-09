@@ -4,7 +4,7 @@ A Bayesian hierarchical model for predicting handball game scores using Stan. Th
 
 ---
 
-## Model Overview
+## 1. Model Overview
 
 Handball scoring can be modeled using Poisson likelihoods with log‑intensities that depend on:
 
@@ -16,7 +16,7 @@ All team abilities are given hierarchical priors so that information is shared a
 
 --- 
 
-## Conceptual Explanation
+## 2. Conceptual Explanation
 
 This section describes a centered version of the model for readability. The actual Stan file uses a non‑centered parameterization.
 ### Team Attack and Defense
@@ -26,7 +26,7 @@ Each team t has two abilities:
 - att_t : attack strength
 - def_t : defense strength
 
-- We assume:
+We assume:
 
   (att_t, def_t) ~ Multivariate Normal(mean = (abar_1, abar_2), covariance = Sigma)
 
@@ -40,24 +40,17 @@ Each team t has two abilities:
       
  This structure allows attack and defense to be correlated.
 
----
+Concerning the home advantage, we assume each team t has a home‑advantage effect:
 
-### Home Advantage
-
-Each team t has a home‑advantage effect:
-
-  ha_t ~ Normal(mu_ha, sigma_ha)
+ha_t ~ Normal(mu_ha, sigma_ha)
 
 with hyperpriors:
 
   mu_ha    ~ Normal(0.2, 0.01)
   sigma_ha ~ Exponential(10)
 
----
 
-## Match Likelihood
-
-For each match i:
+The likelihood for each match i is as follows:
 
 - h_i = home team
 - a_i = away team
@@ -69,10 +62,10 @@ The scoring intensities are:
   log_lambda_home_i = ha_(h_i) + att_(h_i) - def_(a_i)
   log_lambda_away_i = att_(a_i) - def_(h_i)
 
-Scores follow:
+and scores follow:
 
   yH_i ~ Poisson(exp(log_lambda_home_i))
   
   yA_i ~ Poisson(exp(log_lambda_away_i))
 
----
+
