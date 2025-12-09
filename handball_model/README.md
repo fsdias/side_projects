@@ -75,3 +75,6 @@ and scores follow:
   yA_i ~ Poisson(exp(log_lambda_away_i))
 
 
+
+## 3. Repository contents
+
